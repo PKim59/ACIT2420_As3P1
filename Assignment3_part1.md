@@ -1,19 +1,3 @@
-Write a tutorial that would guide the reader through the following steps.
-
-- Starting from a Fresh Debian 12 server on digitalocean.
-
-They will already have an ssh key, have set themselves up to connect using that key. Basically, they've done everything in week1! you can check what it looks like in the github page of the file.
-
-Look at week 4 notes for how to create a new user and prevent a user from logging in as root.
-
-- Create a new regular user:
-	- User can perform administrative tasks
-	- User has bash as login shell
-	- User can access the server via SSH
-- Prevent the root user from connecting to the server via SSH
-- Install nginx
-- Configure nginx to serve a sample website
-
 # Assignment 3
 
 In this assignment, we will be creating a web server using digitalocean, creating a new user (as using the root user isn't good practice) with the necessary permissions, configuring a Secure Shell (ssh) connection, and configuring the web server to serve a website!
@@ -125,9 +109,10 @@ You should get a lovely "Permission Denied" error message. Congratulations! You 
 sudo apt install nginx
 ```
 
->Note: Depending on your settings, you may have safeguards for sudo commands. It may ask you to enter your password to confirm the action.
+>Note: Depending on your settings, you may have safeguards set for sudo where it may ask you to enter your password to confirm the action.
+>Enter the password to proceed as necessary.
 
-3. Create a directory in the /var/www location named my-site. Enter the following command:
+3. Create a folder in the /var/www directory named my-site. Enter the following command:
 
 ```
 sudo mkdir /var/www/my-site
@@ -223,5 +208,5 @@ Ideally, you will see the following messages after entering the command:
 sudo reboot
 ```
 
-12. After a few minutes, open your internet browser and enter the ip address of your web server, i.e. the ip address of the debian server you use for your ssh connection command.
+12. After a few minutes, open your internet browser and enter the ip address of your web server, i.e. the ip address of the debian server you use for your ssh connection command. You should see a singular "Hello World" message in the middle of the page!
 
