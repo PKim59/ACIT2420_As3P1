@@ -4,7 +4,7 @@ In this assignment, we will be creating a web server using digitalocean, creatin
 
 ## Making a new user, enabling ssh for that user and blocking root access.
 
-1. To create a new user in your web server, enter the following code:
+1. Assuming you have already connected to your debian server, create a new user in your Debian server by entering the following command:
 
 ```
 useradd -ms /bin/bash <the username you want>
@@ -36,7 +36,7 @@ passwd <user-name>
 usermod -aG sudo <user-name>
 ```
 
-5. Now we need to copy the root user's ssh configurations to the new user as well. We can do this by copying the root users entire ssh folder to the new user's home directory. To do this, enter the following command:
+5. Now we need to copy the root user's ssh configurations for the new user. We can do this by copying the root user's entire ssh folder to the new user's home directory. To do this, enter the following command:
 
 ```
 cp -r /home/root/.ssh /home/<username>
@@ -124,7 +124,7 @@ sudo mkdir /var/www/my-site
 sudo vim /var/www/my-site/index.html
 ```
 
-5. In Vim, paste the following content into the file and then save and quit.
+5. In Vim, enter the following content into the file (index.html) and then save and quit.
 
 ```html
 <!DOCTYPE html>
@@ -158,7 +158,7 @@ sudo vim /var/www/my-site/index.html
 sudo vim /etc/nginx/sites-available/my-site.conf
 ```
 
-7. In Vim, paste the following content into the file and then save and quit.
+7. In Vim, enter the following content into the file and then save and quit.
 
 ```
 server {
@@ -179,19 +179,19 @@ server {
 }
 ```
 
-8. Now, we need to link the file so that it can be activated. Do this by entering the following command:
+8. Now, we need to create a symbolic link to the file so that it can be activated. Do this by entering the following command:
 
 ```
 sudo ln -s /etc/nginx/sites-available/my-site.conf /etc/nginx/sites-enabled
 ```
 
-9. Now that it is enabled, we need to ensure that the default command does not get in the way. Enter the following command:
+9. Now that it is linked, we need to ensure that the default setting does not get in the way by unlinking the default settings. Enter the following command:
 
 ```
 sudo unlink /etc/nginx/sites-enabled/default
 ```
 
-10. Now that it is removed, we can test our configurations to ensure there are no issues. Enter the following command to check:
+10. Now that the link to the default settings is removed, we can test our nginx configuration file to ensure there are no issues. Enter the following command to check:
 
 ```
 sudo nginx -t
@@ -200,6 +200,7 @@ sudo nginx -t
 Ideally, you will see the following messages after entering the command:
 
 >nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+
 >nginx: configuration file /etc/nginx/nginx.conf test is successful
 
 11. Now, we need to restart the service to ensure these new settings are applied. To play it safe, let's reboot the server entirely using the following command:
@@ -208,5 +209,5 @@ Ideally, you will see the following messages after entering the command:
 sudo reboot
 ```
 
-12. After a few minutes, open your internet browser and enter the ip address of your web server, i.e. the ip address of the debian server you use for your ssh connection command. You should see a singular "Hello World" message in the middle of the page!
+12. After a few minutes, open your internet browser and enter the ip address of your web server, i.e. the ip address of the debian server you use for your ssh connection command. You should see the "Hello World" message (from index.html) in the middle of the page!
 
