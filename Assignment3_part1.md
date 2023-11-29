@@ -119,7 +119,7 @@ You should get a lovely "Permission Denied" error message. Congratulations! You 
 
 1. Connect to your Debian server using the ssh connection as the new user you created above.
 
-2. Once connected, enter the following command:
+2. Once connected, enter the following command to install nginx, a package that allows us to create a web server:
 
 ```
 sudo apt install nginx
@@ -127,8 +127,101 @@ sudo apt install nginx
 
 >Note: Depending on your settings, you may have safeguards for sudo commands. It may ask you to enter your password to confirm the action.
 
-3. 
+3. Create a directory in the /var/www location named my-site. Enter the following command:
 
-command to run to create symbolic link:
- sudo ln -s /etc/nginx/sites-available/my-site.conf /etc/nginx/sites-enabled
+```
+sudo mkdir /var/www/my-site
+```
+
+4. Now, we need to create a base index.html file that will serve as a landing page for anyone who goes to your web server. Enter the following command:
+
+```
+sudo vim /var/www/my-site/index.html
+```
+
+5. In Vim, paste the following content into the file and then save and quit.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2420</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello, World</h1>
+</body>
+</html>
+```
+
+6. We're now going to create the server block file. First, enter the following command: 
+
+```
+sudo vim /etc/nginx/sites-available/my-site.conf
+```
+
+7. In Vim, paste the following content into the file and then save and quit.
+
+```
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	
+	root /var/www/my-site;
+	
+	index index.html index.htm index.nginx-debian.html;
+	
+	server_name _;
+	
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+}
+```
+
+8. Now, we need to link the file so that it can be activated. Do this by entering the following command:
+
+```
+sudo ln -s /etc/nginx/sites-available/my-site.conf /etc/nginx/sites-enabled
+```
+
+9. Now that it is enabled, we need to ensure that the default command does not get in the way. Enter the following command:
+
+```
+sudo unlink /etc/nginx/sites-enabled/default
+```
+
+10. Now that it is removed, we can test our configurations to ensure there are no issues. Enter the following command to check:
+
+```
+sudo nginx -t
+```
+
+Ideally, you will see the following messages after entering the command:
+
+>nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+>nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+11. Now, we need to restart the service to ensure these new settings are applied. To play it safe, let's reboot the server entirely using the following command:
+
+```
+sudo reboot
+```
+
+12. After a few minutes, open your internet browser and enter the ip address of your web server, i.e. the ip address of the debian server you use for your ssh connection command.
 
